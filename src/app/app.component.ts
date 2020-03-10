@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { NgForm, NgModelGroup, FormControl, NgModel } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -8,12 +8,19 @@ import { NgForm } from '@angular/forms';
 })
 export class AppComponent {
   @ViewChild('f') form: NgForm;
-  @ViewChild('username') userInput: ElementRef;
-
+  @ViewChild('username') userModel: NgModel;
+  defaultQuestion = 'pet';
+  secretAnswer = '';
+  genders = ['Male', 'Female', 'Others'];
 
   suggestUserName() {
     const suggestedName = 'Superuser' + Math.round(Math.random() * 100);
-    this.userInput.nativeElement.value = suggestedName;
+    // this.userModel.control.setValue(suggestedName);
+    this.form.form.patchValue({
+      userData: {
+       username: suggestedName
+      }
+    });
   }
 
   onSubmit(form: NgForm) {
